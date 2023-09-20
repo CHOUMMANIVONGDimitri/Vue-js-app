@@ -1,60 +1,74 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue';
-import FormTest from './components/FormTest.vue';
-import SlotComp from './components/SlotComp.vue';
+import { ref, onMounted, watch } from 'vue'
 
-import { ref, reactive } from 'vue';
+const todos = ref([])
+const name = ref('')
+const newTodo = ref({ title: '', content: '' })
+const isTitleEdit = ref(false)
 
-const title = "Hello World!";
-const subTitle = ref("Lorem ipsum dolor sit amet.");
-const user = reactive({
-  name: "your name",
-  age: 20
+const addTodo = () => {
+  const newId = todos.value.length + 1
+  todos.value.push({
+    id: newId,
+    title: newTodo.value.title,
+    content: newTodo.value.content,
+    done: false,
+    createdAt: new Date()
+  })
+  newTodo.value.content = ''
+  newTodo.value.title = ''
+}
+
+const deleteTodo = (idToDelete) => {
+  todos.value = todos.value.filter(({ id }) => id !== idToDelete)
+}
+
+watch(name, (newName) => {
+  localStorage.setItem('title', newName)
 })
 
-const displayValue = () => {
-  console.log(user.name, user.age)
-};
+watch(
+  todos,
+  (newValue) => {
+    localStorage.setItem('datas', JSON.stringify(newValue))
+  },
+  { deep: true }
+)
 
-displayValue();
+onMounted(() => {
+  name.value = localStorage.getItem('title') || ''
+  todos.value = JSON.parse(localStorage.getItem('datas')) || []
+})
 </script>
 
+/* Todo app */
 <template>
-  <HelloWorld  :title="title" :sub-title="subTitle" />
-  <input :class="{'text-red': subTitle.length <= 10}" type="text" v-model="subTitle">
+  <h1>
+    <input v-if="isTitleEdit" v-model="name" placeholder="Titre de la liste" />
+    <span v-else>{{ name }}</span>
+    <button @click="isTitleEdit = !isTitleEdit">{{ isTitleEdit ? 'save' : 'edit' }}</button>
+  </h1>
+  <p>liste de mes tâches</p>
 
-  <FormTest :user="user" />
-  <input type="text" v-model="user.name" v-on:input="displayValue">
-  <input type="number" v-model="user.age" @input="displayValue" :class="[user.age > 30 ? 'text-green' : 'text-red']">
-  <div v-if="user.age > 30" class="text-green">
-    Your age is above 30
+  <form @submit.prevent="addTodo">
+    <h2>Ajoute des tâches</h2>
+    <input v-model="newTodo.title" placeholder="titre de la tâche" />
+    <textarea v-model="newTodo.content" placeholder="description..."></textarea>
+    <button>Ajouter une tâche</button>
+  </form>
+
+  <ul v-if="todos.length > 0">
+    <li v-for="todo in todos" :key="todo.id">
+      <input type="checkbox" v-model="todo.done" />
+      <span :class="{ done: todo.done }">{{ todo.content }}</span>
+      <button @click="deleteTodo(todo.id)">Supprimer</button>
+    </li>
+  </ul>
+
+  <div>
+    <h1>test</h1>
+    <p>test</p>
   </div>
-
-  <SlotComp slot-title="Test slot">
-    <template v-slot:pargraphe1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, praesentium aperiam. Molestiae ex accusamus ad cumque sapiente cupiditate in nobis voluptatibus placeat, incidunt corporis odio necessitatibus praesentium culpa. In, laborum?
-        Quidem voluptas hic quasi excepturi et eveniet adipisci amet veritatis accusantium tempora aut assumenda fugiat, nam ad, quam explicabo porro, tenetur culpa dolorum magnam enim. Deserunt quo autem voluptatum laborum.
-        Iure laborum illo saepe ex odio pariatur, sit explicabo aliquam numquam maxime omnis dicta sint praesentium cupiditate soluta, ipsa asperiores eum velit suscipit reiciendis, libero vitae recusandae! Natus, quos facere.
-      </p>
-    </template>
-    <template v-slot:pargraphe2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, praesentium aperiam. Molestiae ex accusamus ad cumque sapiente cupiditate in nobis voluptatibus placeat, incidunt corporis odio necessitatibus praesentium culpa. In, laborum?
-        Quidem voluptas hic quasi excepturi et eveniet adipisci amet veritatis accusantium tempora aut assumenda fugiat, nam ad, quam explicabo porro, tenetur culpa dolorum magnam enim. Deserunt quo autem voluptatum laborum.
-        Iure laborum illo saepe ex odio pariatur, sit explicabo aliquam numquam maxime omnis dicta sint praesentium cupiditate soluta, ipsa asperiores eum velit suscipit reiciendis, libero vitae recusandae! Natus, quos facere.
-      </p>
-    </template>
-  </SlotComp>
 </template>
 
-<style scoped>
-
-.text-red {
-  color: #b81b1b;
-}
-.text-green {
-  color: #1bb86f;
-}
-
-</style>
+<style scoped></style>

@@ -55,14 +55,30 @@ onMounted(() => {
 }
 
 .title-container {
-  widows: 20px;
-  border: solid red 1px;
-  transition:
-    0.5s,
-    background-color 0.5s;
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
+  height: 2.5rem;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  transition: all 0.5s;
+  background-color: rgb(21, 145, 108);
+  cursor: default;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  > span {
-    hyphens: auto;
+  > button {
+    color: aliceblue;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.2rem;
+
+    &:hover {
+      background-color: rgb(18, 117, 87);
+      color: rgb(199, 207, 214);
+    }
   }
 }
 </style>

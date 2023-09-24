@@ -30,7 +30,10 @@ onMounted(() => {
 <template>
   <BaseLayout>
     <template #header>
-      <TitleHeader titleDefault="Ajouter un Titre..." sub-title="liste de mes tâches" />
+      <TitleHeader
+        titleDefault="Ajouter un Titre..."
+        sub-title="Une Todo liste fait avec VueJs utilisant le localStorage pour le stockage de données"
+      />
     </template>
     <template #default>
       <FormContainer :datas="todos" />

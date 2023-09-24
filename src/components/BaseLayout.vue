@@ -13,23 +13,24 @@
 </template>
 
 <style scoped>
+[class^='layout-'] {
+  color: aliceblue;
+  background-color: rgb(39, 39, 39);
+  padding: 1.5rem 1rem;
+}
 .layout-header {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   min-height: 20vh;
+  background: linear-gradient(0deg, rgb(39, 39, 39) 0%, rgb(15, 124, 91) 100%);
 }
 .layout-main {
   min-height: 60vh;
 }
 .layout-footer {
+  color: rgb(56, 56, 56);
   min-height: 20vh;
-}
-
-[class^='layout-'] {
-  border: solid rgb(0, 60, 255) 1px;
-  color: aliceblue;
-  background-color: rgb(39, 39, 39);
-  padding: 1.5rem 1rem;
+  background-color: aliceblue;
 }
 </style>

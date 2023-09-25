@@ -54,6 +54,10 @@ onMounted(() => {
   border: none;
 }
 
+.title-sub {
+  margin-top: 2rem;
+}
+
 .title-container {
   text-transform: uppercase;
   text-align: center;
@@ -67,6 +71,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: fit-content;
 
   > button {
     color: aliceblue;

@@ -37,6 +37,10 @@ const props = defineProps(['datas', 'deleteData']);
   display: flex;
   flex-flow: column wrap;
 
+  @media screen and (min-width: 768px) {
+    width: 100%;
+  }
+
   & > .list-element {
     & > .list-title {
       & > button {

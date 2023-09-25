@@ -59,6 +59,11 @@ form.form-container {
   border: solid rgb(126, 126, 126) 2px;
   color: rgb(18, 117, 87);
 
+  @media screen and (min-width: 768px) {
+    width: 33%;
+    height: fit-content;
+  }
+
   & > .form-item {
     display: flex;
     flex-flow: column;

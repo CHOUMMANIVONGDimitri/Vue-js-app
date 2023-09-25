@@ -27,6 +27,13 @@
 }
 .layout-main {
   min-height: 60vh;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2rem;
+  @media screen and (min-width: 768px) {
+    flex-flow: row nowrap;
+    padding-bottom: 5rem;
+  }
 }
 .layout-footer {
   color: rgb(56, 56, 56);
